@@ -1,0 +1,16 @@
+#canvas1 {
+    position: absolute;
+    background-color: black;
+}
+
+body {
+    background: black;
+    margin: 0px;
+}
+
+.wrapper {
+    position: relative;
+    display: block;
+    width: 500px;
+    height: 500px;
+}
