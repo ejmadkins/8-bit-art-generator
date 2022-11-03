@@ -19,16 +19,7 @@ canvas.addEventListener('mousemove', function(e) {
 
 canvas.addEventListener('mousedown', function(e) {
     mousePressed = true
-})
-
-canvas.addEventListener('click', function(e) {
-    console.log("click")
-    p = getPixel(e.clientX, e.clientY)
-    pixels[p.x][p.y].fill = 'red'
-    px = pixels[p.x][p.y]
-    ctx.fillStyle = px.fill
-    ctx.fillRect(px.x, px.y, ps, ps)
-    
+    draw(e.clientX, e.clientY);
 })
 
 canvas.addEventListener('mouseup', function(e) {
@@ -45,8 +36,8 @@ canvas.addEventListener('mouseleave', function(e) {
 
 let pixels = [];
 
-const h = 100;
-const w = 100;
+const h = 16;
+const w = 16;
 
 // todo: Change this when a resize event occure and the grid is drawn.
 // implement a render grid function and use this in init grid. Seperate the initial creation of the pixel array.
@@ -77,14 +68,11 @@ function getPixel(x,y) {
 
 function draw(x,y) {
     p = getPixel(x,y)
-    // console.log("coloring pixel x: " + p.x + " y: " + p.y)
     if (mousePressed) {
         let color = document.getElementById('color').value
         // Interpolate if mouse is more than 1 pixel away:
-        console.log("previous x: " + prevPixel.x + " y: " + prevPixel.y + " current x: " + p.x + " y: " + p.y)
         if(Math.abs(p.x - prevPixel.x) > 1 || Math.abs(p.y - prevPixel.y) > 1) {
             if(p.x === prevPixel.x) {
-                console.log("x vals the same")
                     for(i = p.y > prevPixel.y ? prevPixel.y : p.y; i > p.y; i++) {
                         pixels[interpPixels[i].x][interpPixels[i].y].fill = color
                         ctx.fillStyle = color
@@ -103,9 +91,7 @@ function draw(x,y) {
                 return
             }
             interpPixels = helper(prevPixel.x, prevPixel.y, p.x, p.y)
-            console.log("Interpolating pixels: " + interpPixels)
             for(let i = 0; i < interpPixels.length; i++) {
-                console.log("auto filling pixel i: " + i + ": " + interpPixels[i].x + " " + interpPixels[i].y)
                 pixels[interpPixels[i].x][interpPixels[i].y].fill = color
                 ctx.fillStyle = color
                 ctx.fillRect(pixels[interpPixels[i].x][interpPixels[i].y].x, pixels[interpPixels[i].x][interpPixels[i].y].y, ps, ps)
@@ -132,10 +118,7 @@ function draw(x,y) {
 
 function helper(x0, y0, x1, y1) {
     num_xvals = Math.max(Math.abs(y1-y0), Math.abs(x1-x0))+1
-    console.log("num XVALS: " + num_xvals)
-    console.log("x0y0x1y1: " + x0 + y0 + x1 + y1)
     xvals = Array.from({length: num_xvals}, (v, i) => x0+(i+1)*(x1-x0)/(num_xvals))
-    console.log("XVALS: " + xvals)
     interpPixels = []
     for(let i = 0; i < xvals.length; i++) {
         let p = { x: Math.round(xvals[i]), y: Math.round(interpolate(x0, y0, x1, y1, xvals[i]))}
