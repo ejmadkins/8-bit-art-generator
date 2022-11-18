@@ -12,10 +12,10 @@ function App() {
         <Nav></Nav>
       </div>
       <div className="flex flex-wrap justify-center gap-4">
-        <div className="m-64">
+        <div className="m-4">
           <Canvas></Canvas>{' '}
         </div>
-        <div className="m-64">
+        <div className="m-4">
           <div className="flex justify-center gap-4">
             <Menu></Menu>
             <SavedDrawings></SavedDrawings>
