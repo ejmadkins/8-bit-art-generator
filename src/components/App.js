@@ -13,7 +13,7 @@ function App() {
       </div>
       <div className="flex flex-wrap justify-center gap-4">
         <div className="m-4">
-          <Canvas></Canvas>{' '}
+          <Canvas height="800" width="800"></Canvas>{' '}
         </div>
         <div className="m-4">
           <div className="flex justify-center gap-4">
